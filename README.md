@@ -164,8 +164,8 @@ lib/
 <div dir="ltr">
 
 ```bash
-git clone https://github.com/your-username/asir-stamps-app.git
-cd asir-stamps-app
+git clone https://github.com/GeylanKalafMohe/Asir-Stamps.git
+cd Asir-Stamps
 ```
 
 </div>
