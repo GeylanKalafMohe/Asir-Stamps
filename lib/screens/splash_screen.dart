@@ -1,8 +1,10 @@
 import 'package:asir_stamps_app/screens/login_screen.dart';
+import 'package:asir_stamps_app/screens/onboarding/onboarding_screen.dart';
 import 'package:asir_stamps_app/utils/app_colors.dart';
 import 'package:asir_stamps_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,10 +22,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2));
+
+    final prefs = await SharedPreferences.getInstance();
+    final onboardingCompleted =
+        prefs.getBool('onboarding_is_completed') ?? false;
+
     if (mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(
+          builder: (context) => onboardingCompleted
+              ? const LoginScreen()
+              : const OnboardingScreen(),
+        ),
       );
     }
   }

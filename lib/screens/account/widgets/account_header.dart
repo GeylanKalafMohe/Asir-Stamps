@@ -1,8 +1,11 @@
+import 'package:asir_stamps_app/viewmodels/navigation_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/user_info.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_fonts.dart';
+import '../../onboarding/onboarding_screen.dart';
 
 class AccountHeader extends StatelessWidget {
   final UserInfo userInfo;
@@ -25,9 +28,41 @@ class AccountHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.settings, color: AppColors.accountBlue),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // Navigate to Stations screen (index 3)
+                      final navigationViewModel =
+                          Provider.of<NavigationViewModel>(
+                            context,
+                            listen: false,
+                          );
+                      navigationViewModel.setCurrentIndex(
+                        0,
+                      ); // Navigate to StationsScreen (index 3 in MainTabScreen)
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OnboardingScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.logout,
+                      color: AppColors.accountBlue,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.settings,
+                      color: AppColors.accountBlue,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -45,7 +80,7 @@ class AccountHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userInfo.name,
+                      userInfo.fullName,
                       style: AppFonts.bodyLarge.copyWith(
                         color: AppColors.accountGreen,
                         fontWeight: FontWeight.bold,

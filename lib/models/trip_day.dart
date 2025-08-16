@@ -1,25 +1,30 @@
-import 'popular_place.dart';
+import 'dart:convert';
+
+import 'package:intl/intl.dart';
 
 class TripDay {
-  final int dayNumber;
   final DateTime date;
-  final List<PopularPlace> places;
+  final List<String> places;
 
-  TripDay({
-    required this.dayNumber,
-    required this.date,
-    this.places = const [],
-  });
+  TripDay({required this.date, this.places = const []});
 
-  TripDay copyWith({
-    int? dayNumber,
-    DateTime? date,
-    List<PopularPlace>? places,
-  }) {
+  TripDay copyWith({DateTime? date, List<String>? places}) {
+    return TripDay(date: date ?? this.date, places: places ?? this.places);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'date': date.millisecondsSinceEpoch, 'places': places};
+  }
+
+  factory TripDay.fromMap(Map<String, dynamic> map) {
     return TripDay(
-      dayNumber: dayNumber ?? this.dayNumber,
-      date: date ?? this.date,
-      places: places ?? this.places,
+      date: DateFormat('dd/MM/yyyy').parse(map['date']),
+      places: List<String>.from(map['places']),
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory TripDay.fromJson(String source) =>
+      TripDay.fromMap(json.decode(source));
 }

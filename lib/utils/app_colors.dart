@@ -64,5 +64,27 @@ class AppColors {
     fontFamily: AppFonts.fontFamily,
     scaffoldBackgroundColor: scaffoldBackground,
     cardColor: scaffoldBackground,
+    checkboxTheme: CheckboxThemeData(
+      fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return navbarBackground;
+        }
+        return null;
+      }),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: navbarBackground,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: navbarBackground,
+        foregroundColor: Colors.white,
+      ),
+    ),
+    snackBarTheme: const SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+    ),
   );
 }

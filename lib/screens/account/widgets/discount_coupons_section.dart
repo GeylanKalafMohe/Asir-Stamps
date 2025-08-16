@@ -14,25 +14,25 @@ class DiscountCouponsSection extends StatelessWidget {
         'title': 'كايا كافيه',
         'subtitle': 'عسير، أبها',
         'rating': '4.2',
-        'image': AppImages.disocunt2,
+        'image': AppImages.discount2,
       },
       {
         'title': 'مطعم مهراني',
         'subtitle': 'عسير، أبها',
         'rating': '4.5',
-        'image': AppImages.disocunt1,
+        'image': AppImages.discount1,
       },
       {
         'title': 'فندق قصر أبها',
         'subtitle': 'عسير، أبها',
         'rating': '4.8',
-        'image': AppImages.disocunt3,
+        'image': AppImages.discount3,
       },
       {
         'title': 'فندق رويال بوتيك',
         'subtitle': 'عسير، خميس مشيط',
         'rating': '4.0',
-        'image': AppImages.disocunt4,
+        'image': AppImages.discount4,
       },
     ];
 

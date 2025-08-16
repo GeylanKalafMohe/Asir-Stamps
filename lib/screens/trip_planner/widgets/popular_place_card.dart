@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/popular_place.dart';
-import '../../../services/trip_service.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_fonts.dart';
+import '../../../viewmodels/trip_viewmodel.dart';
 import '../../place_detail/place_detail_screen.dart';
 
 class PopularPlaceCard extends StatefulWidget {
@@ -127,7 +128,11 @@ class _PopularPlaceCardState extends State<PopularPlaceCard> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              TripService().addPlaceToTrip(widget.place);
+                              final tripViewModel = Provider.of<TripViewModel>(
+                                context,
+                                listen: false,
+                              );
+                              tripViewModel.addPlaceToTrip(widget.place);
                               ScaffoldMessenger.of(
                                 context,
                               ).removeCurrentSnackBar();

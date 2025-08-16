@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/popular_place.dart';
-import '../../services/trip_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_fonts.dart';
+import '../../viewmodels/trip_viewmodel.dart';
 import 'widgets/place_info_card.dart';
 import 'widgets/similar_places_section.dart';
 
@@ -50,7 +51,11 @@ class PlaceDetailScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      TripService().addPlaceToTrip(place);
+                      final tripViewModel = Provider.of<TripViewModel>(
+                        context,
+                        listen: false,
+                      );
+                      tripViewModel.addPlaceToTrip(place);
                       ScaffoldMessenger.of(context).removeCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

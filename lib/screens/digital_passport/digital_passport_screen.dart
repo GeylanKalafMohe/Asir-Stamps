@@ -39,16 +39,17 @@ class DigitalPassportScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
           // Status bar brightness (optional)
-          statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
           statusBarBrightness: Brightness.light, // For iOS (dark icons)
         ),
-        toolbarHeight: -20,
+        toolbarHeight: -10,
       ),
 
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 20),
               BannerCard(bannerData: bannerData),
               PassportCard(passportData: passportData),
               LevelProgressCard(passportData: passportData),

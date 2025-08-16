@@ -1,13 +1,19 @@
 import 'package:asir_stamps_app/utils/app_colors.dart';
+import 'package:asir_stamps_app/viewmodels/navigation_viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
+import 'viewmodels/ai_trip_planner_viewmodel.dart';
+import 'viewmodels/coupon_viewmodel.dart';
+import 'viewmodels/trip_viewmodel.dart';
+import 'viewmodels/voucher_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,20 +41,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Asir Stamps',
-      theme: AppColors.lightTheme,
-      locale: const Locale('ar'), // Set default locale to Arabic
-      supportedLocales: const [
-        Locale('ar'), // Arabic
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => VoucherViewModel()),
+        ChangeNotifierProvider(create: (context) => CouponViewModel()),
+        ChangeNotifierProvider(create: (context) => AiTripPlannerViewModel()),
+        ChangeNotifierProvider(create: (context) => TripViewModel()),
+        ChangeNotifierProvider(create: (context) => NavigationViewModel()),
       ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      child: MaterialApp(
+        title: 'Asir Stamps',
+        theme: AppColors.lightTheme,
+        locale: const Locale('ar'), // Set default locale to Arabic
+        supportedLocales: const [
+          Locale('ar'), // Arabic
+        ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+      ),
     );
   }
 }

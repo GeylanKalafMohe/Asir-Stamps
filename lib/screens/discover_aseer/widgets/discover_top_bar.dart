@@ -6,8 +6,13 @@ import '../../../utils/app_fonts.dart';
 
 class DiscoverTopBar extends StatelessWidget {
   final UserInfo userInfo;
+  final List<Widget> children;
 
-  const DiscoverTopBar({super.key, required this.userInfo});
+  const DiscoverTopBar({
+    super.key,
+    required this.userInfo,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class DiscoverTopBar extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'أهلا بك، ${userInfo.name}',
+                          'أهلا بك، ${userInfo.fullName}',
                           style: AppFonts.bodyMedium.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
@@ -71,37 +76,8 @@ class DiscoverTopBar extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'اكتشف أماكن الأختام القريبة منك!',
-                        style: AppFonts.bodyLarge.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'تذكر، الأختام الذهبية تملك النقاط الأعلى!',
-                        style: AppFonts.bodyMedium.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.map, color: Colors.white, size: 28),
-                  ),
-                ],
-              ),
+              ...children,
+              SizedBox(height: 50),
             ],
           ),
         ),

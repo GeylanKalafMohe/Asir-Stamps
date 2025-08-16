@@ -1,5 +1,6 @@
 import 'package:asir_stamps_app/screens/main_tab_screen.dart';
-import 'package:asir_stamps_app/screens/sign_up_screen.dart';
+import 'package:asir_stamps_app/screens/partner_loyalty/partner_loyalty_screen.dart';
+import 'package:asir_stamps_app/screens/sign_up/sign_up_screen.dart';
 import 'package:asir_stamps_app/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,9 +17,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController(
+    text: 'asirstamps@gmail.com',
+  );
+  final TextEditingController _passwordController = TextEditingController(
+    text: 'asirstamps@gmail.com',
+  );
   bool _obscurePassword = true;
+
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      // Check if partner email
+      if (_usernameController.text.trim() == '1asirstamps@gmail.com') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const PartnerLoyaltyScreen()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainTabScreen()),
+        );
+      }
+    }
+  }
+
+  void _socialLogin() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainTabScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,57 +104,84 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 48),
-                          TextField(
-                            controller: _usernameController,
-                            style: AppFonts.bodyMedium.copyWith(
-                              color: Colors.white,
-                            ),
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.person,
-                                color: AppColors.textPrimary,
-                              ),
-                              hintText: 'اسم المستخدم أو الإيميل',
-                              hintStyle: AppFonts.bodyMedium.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                              enabledBorder: textfieldBorder,
-                              border: textfieldBorder,
-                              focusedBorder: textfieldBorder,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          TextField(
-                            controller: _passwordController,
-                            obscureText: _obscurePassword,
-                            style: AppFonts.bodyMedium.copyWith(
-                              color: Colors.white,
-                            ),
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.lock,
-                                color: AppColors.textPrimary,
-                              ),
-                              hintText: 'كلمة المرور',
-                              hintStyle: AppFonts.bodyMedium.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                              enabledBorder: textfieldBorder,
-                              border: textfieldBorder,
-                              focusedBorder: textfieldBorder,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: AppColors.textPrimary,
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: _usernameController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'الرجاء إدخال اسم المستخدم أو الإيميل';
+                                    }
+                                    return null;
+                                  },
+                                  style: AppFonts.bodyMedium.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    errorStyle: const TextStyle(
+                                      color: Color.fromARGB(255, 252, 153, 153),
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                    hintText: 'اسم المستخدم أو الإيميل',
+                                    hintStyle: AppFonts.bodyMedium.copyWith(
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    enabledBorder: textfieldBorder,
+                                    border: textfieldBorder,
+                                    focusedBorder: textfieldBorder,
+                                  ),
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassword = !_obscurePassword;
-                                  });
-                                },
-                              ),
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  controller: _passwordController,
+                                  obscureText: _obscurePassword,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'الرجاء إدخال كلمة المرور';
+                                    }
+                                    return null;
+                                  },
+                                  style: AppFonts.bodyMedium.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                  decoration: InputDecoration(
+                                    errorMaxLines: 3,
+                                    errorStyle: const TextStyle(
+                                      color: Color.fromARGB(255, 252, 153, 153),
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.lock,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                    hintText: 'كلمة المرور',
+                                    hintStyle: AppFonts.bodyMedium.copyWith(
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    enabledBorder: textfieldBorder,
+                                    border: textfieldBorder,
+                                    focusedBorder: textfieldBorder,
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _obscurePassword
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _obscurePassword = !_obscurePassword;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -161,14 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const MainTabScreen(),
-                                  ),
-                                );
-                              },
+                              onPressed: _login,
                               child: const Text('تسجيل الدخول'),
                             ),
                           ),
@@ -180,48 +230,72 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width,
                       fit: BoxFit.fitWidth,
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Column(
                         children: [
+                          Text(
+                            'أو سجل الدخول باستخدام:',
+                            style: AppFonts.bodySmall.copyWith(
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 14),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               _SocialLoginButton(
                                 icon: AppIcons.linkedin,
-                                onTap: () {},
+                                onTap: _socialLogin,
                               ),
                               _SocialLoginButton(
                                 icon: AppIcons.x,
-                                onTap: () {},
+                                onTap: _socialLogin,
                               ),
                               _SocialLoginButton(
                                 icon: AppIcons.facebook,
-                                onTap: () {},
+                                onTap: _socialLogin,
                               ),
                               _SocialLoginButton(
                                 icon: AppIcons.google,
-                                onTap: () {},
+                                onTap: _socialLogin,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen(),
+                          const SizedBox(height: 32),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'لا تملك حساب؟ ',
+                                style: AppFonts.bodySmall.copyWith(
+                                  color: AppColors.textPrimary,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              'لا تملك حساب؟ سجل الآن',
-                              style: AppFonts.bodySmall.copyWith(
-                                color: AppColors.textPrimary,
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'سجل الآن',
+                                  style: AppFonts.bodySmall.copyWith(
+                                    color: Color(0xFFBAE9E9),
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Color(0xFFBAE9E9),
+                                    height: 1.5,
+                                    decorationThickness: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 10),
                           Center(

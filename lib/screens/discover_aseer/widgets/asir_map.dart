@@ -42,9 +42,11 @@ class _AsirMapState extends State<AsirMap> {
   LatLng _calculateCenter() {
     if (widget.places.isEmpty) return _asirCenter;
 
-    final latitudes = widget.places.map((p) => p.coordinates.latitude).toList();
+    final latitudes = widget.places
+        .map((p) => p.coordinates!.latitude)
+        .toList();
     final longitudes = widget.places
-        .map((p) => p.coordinates.longitude)
+        .map((p) => p.coordinates!.longitude)
         .toList();
 
     final centerLat = latitudes.reduce((a, b) => a + b) / latitudes.length;
@@ -128,7 +130,7 @@ class _AsirMapState extends State<AsirMap> {
       }
 
       return Marker(
-        point: place.coordinates,
+        point: place.coordinates!,
         width: 200,
         height: 60,
         child: GestureDetector(

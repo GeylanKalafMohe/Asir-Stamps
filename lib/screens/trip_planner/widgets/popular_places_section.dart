@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 
 class PopularPlacesSection extends StatelessWidget {
   final List<PopularPlace> places;
-
-  const PopularPlacesSection({super.key, required this.places});
+  final String title;
+  const PopularPlacesSection({
+    super.key,
+    required this.title,
+    required this.places,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SectionWidget(
-      title: 'الأكثر زيارة',
+      title: title,
       action: TextButton(
         onPressed: () {},
         style: TextButton.styleFrom(
@@ -33,10 +37,8 @@ class PopularPlacesSection extends StatelessWidget {
           itemCount: places.length,
           padding: EdgeInsetsDirectional.only(start: 12, end: 12),
           separatorBuilder: (context, index) => SizedBox(width: 10),
-          itemBuilder: (context, index) => PopularPlaceCard(
-            place: places[index],
-            allPlaces: places,
-          ),
+          itemBuilder: (context, index) =>
+              PopularPlaceCard(place: places[index], allPlaces: places),
         ),
       ),
     );

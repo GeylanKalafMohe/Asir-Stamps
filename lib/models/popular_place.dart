@@ -15,7 +15,8 @@ class PopularPlace {
   final String? googleMapsLink;
   final String? entryFee;
   final String stampType; // 'gold', 'silver', 'bronze'
-  final LatLng coordinates;
+  final LatLng? coordinates;
+  final List<String> categories;
 
   PopularPlace({
     required this.id,
@@ -33,5 +34,10 @@ class PopularPlace {
     this.entryFee,
     required this.stampType,
     required this.coordinates,
+    this.categories = const [],
   });
+
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'title': title, 'location': location};
+  }
 }
